@@ -67,7 +67,7 @@ public class SaleProgressView extends View {
         textColor = ta.getColor(R.styleable.SaleProgressView_textColor, 0xffff3c32);
         overText = ta.getString(R.styleable.SaleProgressView_overText);
         nearOverText = ta.getString(R.styleable.SaleProgressView_nearOverText);
-        textSize = ta.getDimension(R.styleable.SaleProgressView_textSize, sp2px(16));
+        textSize = ta.getDimension(R.styleable.SaleProgressView_textSize, sp2px(11));
         isNeedAnim = ta.getBoolean(R.styleable.SaleProgressView_isNeedAnim, true);
         ta.recycle();
     }
@@ -155,12 +155,12 @@ public class SaleProgressView extends View {
         }
         RectF f = new RectF();
         Rect src = new Rect(0, 0, mLeftIconSrc.getWidth(), mLeftIconSrc.getHeight()); // 指定图片在屏幕上显示的区域  图片 >>原矩形
-        RectF dst = new RectF(dp2px(6), dp2px(5), height - dp2px(7), height - dp2px(5)); // 绘制图片  屏幕 >>目标矩形
+        RectF dst = new RectF(dp2px(4), dp2px(2), height - dp2px(5), height - dp2px(3)); // 绘制图片  屏幕 >>目标矩形
         canvas.drawBitmap(mLeftIconSrc, src, dst, circlePaint);
     }
 
     private void drawCircle(Canvas canvas) {
-        canvas.drawCircle(height - dp2px(15.2f), height / 2, radius, circlePaint);
+        canvas.drawCircle(height - dp2px(9), height / 2, radius, circlePaint);
     }
 
 
