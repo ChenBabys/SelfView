@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="SaleProgressView">
-        <attr name="sideColor" format="color" />
         <attr name="textColor" format="color" />
         <attr name="sideWidth" format="dimension" />
         <attr name="overText" format="string" />
@@ -9,4 +8,13 @@
         <attr name="textSize" format="dimension" />
         <attr name="isNeedAnim" format="boolean" />
     </declare-styleable>
+
+    <declare-styleable name="SlefProgressBar">
+        <attr name="mBackgroundColor" format="color|reference" />
+        <attr name="mFrontGroundColor" format="color|reference" />
+        <attr name="mFrontTextColor" format="string|reference" />
+        <attr name="mFrontTextSize" format="dimension|reference" />
+        <attr name="mFrontText" format="string|reference" />
+    </declare-styleable>
+
 </resources>
