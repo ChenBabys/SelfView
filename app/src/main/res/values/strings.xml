@@ -2,4 +2,13 @@
     <string name="app_name">SelfView</string>
     <string name="nearOverText">即将售罄</string>
     <string name="overText">已售罄</string>
+    <string-array name="chinese_week_string_array">
+        <item>周日</item>
+        <item>周一</item>
+        <item>周二</item>
+        <item>周三</item>
+        <item>周四</item>
+        <item>周五</item>
+        <item>周六</item>
+    </string-array>
 </resources>

@@ -6,12 +6,15 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.Shader;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import androidx.core.content.ContextCompat;
@@ -80,13 +83,16 @@ public class SaleProgressView extends View {
 
 
         fontPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        fontPaint.setColor(ContextCompat.getColor(context, R.color.color_FF392B));
+        //设置渐变色填充
+        LinearGradient linearGradient = new LinearGradient(0, 0, 100, 100
+                , Color.parseColor("#FF563A"), Color.parseColor("#FF212A")
+                , Shader.TileMode.MIRROR);
+        fontPaint.setShader(linearGradient);
         fontPaint.setStyle(Paint.Style.FILL);
 
 
         circlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         circlePaint.setColor(ContextCompat.getColor(context, R.color.color_FFD748));
-        //circlePaint.setStrokeWidth(sideWidth);
         circlePaint.setStyle(Paint.Style.FILL);
 
         textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -153,16 +159,16 @@ public class SaleProgressView extends View {
         if (mLeftIconSrc == null) {
             mLeftIconSrc = BitmapFactory.decodeResource(getResources(), R.mipmap.aec_kill_fire);
         }
-        RectF f = new RectF();
         Rect src = new Rect(0, 0, mLeftIconSrc.getWidth(), mLeftIconSrc.getHeight()); // 指定图片在屏幕上显示的区域  图片 >>原矩形
-        RectF dst = new RectF(dp2px(4), dp2px(2), height - dp2px(5), height - dp2px(3)); // 绘制图片  屏幕 >>目标矩形
+        //绘制他们左上右下的坐标位置（注意！：这个绘制是左上角的是0,0开始的。）
+        RectF dst = new RectF(height * 0.25f, height * 0.18f, height * 0.75f, height * 0.82f); // 绘制图片  屏幕 >>目标矩形
         canvas.drawBitmap(mLeftIconSrc, src, dst, circlePaint);
     }
 
     private void drawCircle(Canvas canvas) {
-        canvas.drawCircle(height - dp2px(9), height / 2, radius, circlePaint);
+        //前面的参数分别是x轴和y轴的圆心坐标
+        canvas.drawCircle(height / 2, height / 2, radius, circlePaint);
     }
-
 
 
     //绘制背景
@@ -170,12 +176,35 @@ public class SaleProgressView extends View {
         canvas.drawRoundRect(bgRectF, radius, radius, srcPaint);
     }
 
-    //绘制进度条
+    //绘制纯颜色的进度条
     private void drawFg(Canvas canvas) {
+        //如果当前的比例小于圆形图表则不绘制。为了避免开头的绘制被挤压出边缘
+        if (width * scale < height) return;
+        Log.d("测试", String.valueOf(scale) + "," + height + "," + width * scale);
         canvas.drawRoundRect(
                 new RectF(0, 0, width * scale, height),
                 radius, radius, fontPaint);
     }
+
+    //绘制填充图片的进度条,弃用
+//    private void drawFg(Canvas canvas) {
+//        if (scale == 0.0f) {
+//            return;
+//        }
+//        Bitmap fgBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+//        Canvas fgCanvas = new Canvas(fgBitmap);
+//        //可以填充图片
+//        Bitmap fgSrc = BitmapFactory.decodeResource(getResources(), R.mipmap.fg);
+//        fgCanvas.drawRoundRect(
+//                new RectF(0, 0, width * scale, height),
+//                radius, radius, srcPaint);
+//
+//        srcPaint.setXfermode(mPorterDuffXfermode);
+//        fgCanvas.drawBitmap(fgSrc, null, bgRectF, srcPaint);
+//
+//        canvas.drawBitmap(fgBitmap, 0, 0, null);
+//        srcPaint.setXfermode(null);
+//    }
 
     //绘制文字信息
     private void drawText(Canvas canvas) {
